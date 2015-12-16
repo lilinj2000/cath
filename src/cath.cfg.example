@@ -14,7 +14,7 @@ broker_id = 0148
 user_id = 
 password = 
 
-# tcp or udp
+# tcp, udp or multi
 protocol = udp
 
 
