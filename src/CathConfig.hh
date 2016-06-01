@@ -1,3 +1,6 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef CATH_CONFIG_HH
 #define CATH_CONFIG_HH
 
@@ -5,17 +8,14 @@
 #include <memory>
 #include "soil/Config.hh"
 
-namespace cath
-{
+namespace cath {
 
 namespace po = boost::program_options;
 
-class CathOptions : public soil::Options
-{
+class CathOptions : public soil::Options {
  public:
-
   CathOptions();
-  
+
   virtual ~CathOptions();
 
   virtual po::options_description* configOptions();
@@ -29,31 +29,24 @@ class CathOptions : public soil::Options
   boost::program_options::options_description config_options_;
 };
 
-class CathConfig
-{
+class CathConfig {
  public:
-  
-  CathConfig(int argc=0, char* argv[]=NULL);
+  explicit CathConfig(int argc = 0, char* argv[] = nullptr);
   ~CathConfig();
 
-  CathOptions* cathOptions()
-  {
+  CathOptions* cathOptions() {
     return cath_options_.get();
   }
 
-  soil::Options* cataMDOptions()
-  {
+  soil::Options* cataMDOptions() {
     return cata_md_options_.get();
   }
 
  private:
   std::unique_ptr<CathOptions> cath_options_;
-  
-  std::unique_ptr<soil::Options> cata_md_options_;
 
+  std::unique_ptr<soil::Options> cata_md_options_;
 };
 
-}  
-
-
-#endif 
+}  // namespace cath
+#endif

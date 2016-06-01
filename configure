@@ -636,6 +636,9 @@ ac_subst_vars='am__EXEEXT_FALSE
 am__EXEEXT_TRUE
 LTLIBOBJS
 LIBOBJS
+JSON_LIBADD
+JSON_CPPFLAGS
+JSON_HOME
 AIR_LIBADD
 AIR_CPPFLAGS
 AIR_HOME
@@ -645,6 +648,8 @@ CATA_HOME
 SOIL_LIBADD
 SOIL_CPPFLAGS
 SOIL_HOME
+RAPIDJSON_CPPFLAGS
+RAPIDJSON_HOME
 BOOST_LIBADD
 BOOST_CPPFLAGS
 BOOST_HOME
@@ -785,9 +790,11 @@ with_gnu_ld
 with_sysroot
 enable_libtool_lock
 with_boost
+with_rapidjson
 with_soil
 with_cata
 with_air
+with_json
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1441,9 +1448,12 @@ Optional Packages:
   --with-sysroot=DIR Search for dependent libraries within DIR
                         (or the compiler's sysroot if not specified).
   --with-boost            home path of the boost, defaults to $home_3rd/boost
+  --with-rapidjson        home path of the rapidjson, defaults to
+                          $RAPIDJSON_HOME
   --with-soil             home path of the soil, defaults to $home_libs/soil
   --with-cata             home path of the cata, defaults to $CATA_HOME
   --with-air              home path of the air, defaults to $home_libs/air
+  --with-json             home path of the json, defaults to $home_libs/json
 
 Some influential environment variables:
   CXX         C++ compiler command
@@ -15300,14 +15310,6 @@ LT_AGE=0
 home_3rd=~/3rd
 home_libs=~/libs
 
-if test -d /llj/3rd ; then
-   home_3rd=/llj/3rd
-fi
-
-if test -d /llj/libs ; then
-   home_libs=/llj/libs
-fi
-
 
 # Check whether --with-boost was given.
 if test "${with_boost+set}" = set; then :
@@ -15329,6 +15331,20 @@ BOOST_LIBADD="$BOOST_HOME/lib/libboost_log_setup.so \
 	      $BOOST_HOME/lib/libboost_date_time.so \
 	      $BOOST_HOME/lib/libboost_system.so"
 
+
+
+RAPIDJSON_HOME=$home_3rd/rapidjson
+
+# Check whether --with-rapidjson was given.
+if test "${with_rapidjson+set}" = set; then :
+  withval=$with_rapidjson; RAPIDJSON_HOME="$withval"
+else
+  RAPIDJSON_HOME="$RAPIDJSON_HOME"
+fi
+
+
+
+RAPIDJSON_CPPFLAGS="-I$RAPIDJSON_HOME/include"
 
 
 
@@ -15358,7 +15374,7 @@ fi
 
 
 CATA_CPPFLAGS="-I$CATA_HOME/include"
-CATA_LIBADD="$CATA_HOME/lib/libcata.la"
+CATA_LIBADD="$CATA_HOME/lib/libcata_md.la"
 
 
 
@@ -15375,6 +15391,20 @@ fi
 AIR_CPPFLAGS="-I$AIR_HOME/include"
 AIR_LIBADD="$AIR_HOME/lib/libair.la"
 
+
+
+
+# Check whether --with-json was given.
+if test "${with_json+set}" = set; then :
+  withval=$with_json; JSON_HOME="$withval"
+else
+  JSON_HOME="$home_libs/json"
+fi
+
+
+
+JSON_CPPFLAGS="-I$JSON_HOME/include"
+JSON_LIBADD="$JSON_HOME/lib/libjson.la"
 
 
 

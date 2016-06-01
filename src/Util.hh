@@ -1,20 +1,21 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef CATH_UTIL_HH
 #define CATH_UTIL_HH
 
 #include "air/MDataFile.hh"
-#include "cata/CataDef.hh"
+#include "json/json.hh"
 
-namespace cath
-{
+namespace cath {
 
-class Util
-{
+class Util {
  public:
-  air::SpeedMData* toSpeedMData(const cata::DepthMarketData* data);
+  static air::SpeedMData* toSpeedMData(const json::Document& doc);
 
-  air::ShfeMData* toShfeMData(const cata::DepthMarketData* data);
+  static air::ShfeMData* toShfeMData(const json::Document& doc);
 };
 
-};
+};  // namespace cath
 
 #endif

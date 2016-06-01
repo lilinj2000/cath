@@ -1,3 +1,6 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef CATH_LOG_HH
 #define CATH_LOG_HH
 

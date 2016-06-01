@@ -1,16 +1,16 @@
+// Copyright (c) 2010
+// All rights reserved.
+
 #ifndef CATH_MDSERVER_HH
 #define CATH_MDSERVER_HH
 
+#include <string>
 #include "cata/MDService.hh"
 #include "air/MDataFile.hh"
 
-namespace cath
-{
+namespace cath {
 
-class Util;
-
-class MDServer : public cata::MDServiceCallback
-{
+class MDServer : public cata::ServiceCallback {
  public:
   MDServer(soil::Options* options,
            const std::string& instru,
@@ -18,31 +18,18 @@ class MDServer : public cata::MDServiceCallback
            const std::string& speed_file);
 
   virtual ~MDServer();
-  
-  virtual void onRspSubMarketData(const std::string& instru, bool success);
 
-  virtual void onRspSubQuoteData(const std::string& instru, bool success) {}
-  
-  virtual void onRspUnsubMarketData(const std::string& instru, bool success);
+  virtual void onRspMessage(const std::string& msg);
 
-  virtual void onRspUnsubQuoteData(const std::string& instru, bool success) {}
-  
-  virtual void onRtnMarketData(const cata::DepthMarketData* data);
-
-  virtual void onRtnQuoteData() {}
-  
-  virtual void onRspError(int errord_id, const std::string& error_msg);
+  virtual void onRtnMessage(const std::string& msg);
 
  private:
-
   std::unique_ptr<cata::MDService> md_service_;
 
   std::unique_ptr<air::MDataFile> md_file_;
   std::unique_ptr<air::MDataFile> speed_file_;
-
-  std::unique_ptr<Util> util_;
 };
 
-};
+};  // namespace cath
 
 #endif

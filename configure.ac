@@ -36,14 +36,6 @@ AC_SUBST(LT_AGE)
 home_3rd=~/3rd
 home_libs=~/libs
 
-if test -d /llj/3rd ; then
-   home_3rd=/llj/3rd
-fi
-
-if test -d /llj/libs ; then
-   home_libs=/llj/libs
-fi
-
 dnl boost lib
 AC_ARG_WITH([boost],
     [AS_HELP_STRING([--with-boost],
@@ -64,6 +56,18 @@ BOOST_LIBADD="$BOOST_HOME/lib/libboost_log_setup.so \
 	      $BOOST_HOME/lib/libboost_system.so"
 AC_SUBST(BOOST_CPPFLAGS)
 AC_SUBST(BOOST_LIBADD)
+
+dnl rapidjson lib
+RAPIDJSON_HOME=$home_3rd/rapidjson
+AC_ARG_WITH([rapidjson], 
+    [AS_HELP_STRING([--with-rapidjson],
+        [home path of the rapidjson, defaults to $RAPIDJSON_HOME])],
+    [RAPIDJSON_HOME="$withval"],
+    [RAPIDJSON_HOME="$RAPIDJSON_HOME"])
+AC_SUBST([RAPIDJSON_HOME])
+
+RAPIDJSON_CPPFLAGS="-I$RAPIDJSON_HOME/include"
+AC_SUBST(RAPIDJSON_CPPFLAGS)
 
 dnl soil lib
 AC_ARG_WITH([soil],
@@ -88,7 +92,7 @@ AC_ARG_WITH([cata],
 AC_SUBST([CATA_HOME])
 
 CATA_CPPFLAGS="-I$CATA_HOME/include"
-CATA_LIBADD="$CATA_HOME/lib/libcata.la"
+CATA_LIBADD="$CATA_HOME/lib/libcata_md.la"
 AC_SUBST(CATA_CPPFLAGS)
 AC_SUBST(CATA_LIBADD)
 
@@ -105,6 +109,18 @@ AIR_LIBADD="$AIR_HOME/lib/libair.la"
 AC_SUBST(AIR_CPPFLAGS)
 AC_SUBST(AIR_LIBADD)
 
+dnl json lib
+AC_ARG_WITH([json],
+    [AS_HELP_STRING([--with-json],
+        [home path of the json, defaults to $home_libs/json])],
+    [JSON_HOME="$withval"],
+    [JSON_HOME="$home_libs/json"])
+AC_SUBST([JSON_HOME])
+
+JSON_CPPFLAGS="-I$JSON_HOME/include"
+JSON_LIBADD="$JSON_HOME/lib/libjson.la"
+AC_SUBST(JSON_CPPFLAGS)
+AC_SUBST(JSON_LIBADD)
 
 AC_OUTPUT([
 	Makefile

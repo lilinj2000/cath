@@ -96,12 +96,13 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(cathdir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_cath_OBJECTS = cath-CathConfig.$(OBJEXT) cath-Util.$(OBJEXT) \
+am_cath_OBJECTS = cath-Util.$(OBJEXT) cath-CathConfig.$(OBJEXT) \
 	cath-MDServer.$(OBJEXT) cath-Main.$(OBJEXT)
 cath_OBJECTS = $(am_cath_OBJECTS)
 am__DEPENDENCIES_1 =
 cath_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -286,6 +287,9 @@ INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+JSON_CPPFLAGS = @JSON_CPPFLAGS@
+JSON_HOME = @JSON_HOME@
+JSON_LIBADD = @JSON_LIBADD@
 LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
@@ -316,6 +320,8 @@ PACKAGE_URL = @PACKAGE_URL@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 RANLIB = @RANLIB@
+RAPIDJSON_CPPFLAGS = @RAPIDJSON_CPPFLAGS@
+RAPIDJSON_HOME = @RAPIDJSON_HOME@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -380,8 +386,8 @@ top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = mdflow
 cath_SOURCES = \
-	CathConfig.cc \
 	Util.cc \
+	CathConfig.cc \
 	MDServer.cc \
 	Main.cc 
 
@@ -389,13 +395,16 @@ cath_CPPFLAGS = -I$(top_srcdir) \
 		$(BOOST_CPPFLAGS) \
 		$(SOIL_CPPFLAGS) \
 		$(CATA_CPPFLAGS) \
-		$(AIR_CPPFLAGS)
+		$(AIR_CPPFLAGS) \
+		$(RAPIDJSON_CPPFLAGS) \
+		$(JSON_CPPFLAGS)
 
 cath_LDADD = \
 	$(BOOST_LIBADD) \
 	$(SOIL_LIBADD) \
 	$(CATA_LIBADD) \
-	$(AIR_LIBADD)
+	$(AIR_LIBADD) \
+	$(JSON_LIBADD)
 
 cath_LDFLAGS = $(LIBADD_DL) -Wl,--no-as-needed -pthread
 
@@ -405,7 +414,7 @@ noinst_HEADERS = CathConfig.hh \
 		CathLog.hh \
 		MDServer.hh
 
-EXTRA_DIST = env.sh.example cath.cfg.example log.cfg.example
+EXTRA_DIST = env.sh cath.cfg log.cfg
 cathdir = $(bindir)
 cath_DATA = $(EXTRA_DIST)
 all: all-recursive
@@ -528,20 +537,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-cath-CathConfig.o: CathConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-CathConfig.o -MD -MP -MF $(DEPDIR)/cath-CathConfig.Tpo -c -o cath-CathConfig.o `test -f 'CathConfig.cc' || echo '$(srcdir)/'`CathConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cath-CathConfig.Tpo $(DEPDIR)/cath-CathConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CathConfig.cc' object='cath-CathConfig.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cath-CathConfig.o `test -f 'CathConfig.cc' || echo '$(srcdir)/'`CathConfig.cc
-
-cath-CathConfig.obj: CathConfig.cc
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-CathConfig.obj -MD -MP -MF $(DEPDIR)/cath-CathConfig.Tpo -c -o cath-CathConfig.obj `if test -f 'CathConfig.cc'; then $(CYGPATH_W) 'CathConfig.cc'; else $(CYGPATH_W) '$(srcdir)/CathConfig.cc'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cath-CathConfig.Tpo $(DEPDIR)/cath-CathConfig.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CathConfig.cc' object='cath-CathConfig.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cath-CathConfig.obj `if test -f 'CathConfig.cc'; then $(CYGPATH_W) 'CathConfig.cc'; else $(CYGPATH_W) '$(srcdir)/CathConfig.cc'; fi`
-
 cath-Util.o: Util.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-Util.o -MD -MP -MF $(DEPDIR)/cath-Util.Tpo -c -o cath-Util.o `test -f 'Util.cc' || echo '$(srcdir)/'`Util.cc
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cath-Util.Tpo $(DEPDIR)/cath-Util.Po
@@ -555,6 +550,20 @@ cath-Util.obj: Util.cc
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='Util.cc' object='cath-Util.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cath-Util.obj `if test -f 'Util.cc'; then $(CYGPATH_W) 'Util.cc'; else $(CYGPATH_W) '$(srcdir)/Util.cc'; fi`
+
+cath-CathConfig.o: CathConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-CathConfig.o -MD -MP -MF $(DEPDIR)/cath-CathConfig.Tpo -c -o cath-CathConfig.o `test -f 'CathConfig.cc' || echo '$(srcdir)/'`CathConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cath-CathConfig.Tpo $(DEPDIR)/cath-CathConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CathConfig.cc' object='cath-CathConfig.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cath-CathConfig.o `test -f 'CathConfig.cc' || echo '$(srcdir)/'`CathConfig.cc
+
+cath-CathConfig.obj: CathConfig.cc
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-CathConfig.obj -MD -MP -MF $(DEPDIR)/cath-CathConfig.Tpo -c -o cath-CathConfig.obj `if test -f 'CathConfig.cc'; then $(CYGPATH_W) 'CathConfig.cc'; else $(CYGPATH_W) '$(srcdir)/CathConfig.cc'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/cath-CathConfig.Tpo $(DEPDIR)/cath-CathConfig.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='CathConfig.cc' object='cath-CathConfig.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o cath-CathConfig.obj `if test -f 'CathConfig.cc'; then $(CYGPATH_W) 'CathConfig.cc'; else $(CYGPATH_W) '$(srcdir)/CathConfig.cc'; fi`
 
 cath-MDServer.o: MDServer.cc
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(cath_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT cath-MDServer.o -MD -MP -MF $(DEPDIR)/cath-MDServer.Tpo -c -o cath-MDServer.o `test -f 'MDServer.cc' || echo '$(srcdir)/'`MDServer.cc
